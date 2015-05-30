@@ -14,7 +14,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import dj_database_url
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT  = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(PROJECT)
 
 
 # Quick-start development settings - unsuitable for production
@@ -60,7 +61,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, "templates"),
+            os.path.join(PROJECT, "templates"),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -82,7 +83,9 @@ WSGI_APPLICATION = 'pelawak.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(),
-} 
+}
+
+DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -104,5 +107,10 @@ STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(PROJECT, 'static'),
 )
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'

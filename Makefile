@@ -3,8 +3,7 @@ SHELL := /bin/sh
 
 # Set important Paths
 PROJECT := pelawak
-LOCALPATH := $(CURDIR)/$(PROJECT)
-PYTHONPATH := $(LOCALPATH)/
+PYTHONPATH := $(CURDIR)
 PYTHON_BIN := $(VIRTUAL_ENV)/bin
 
 # Production Settings
@@ -37,6 +36,10 @@ djangohelp:
 runserver:
 	$(PYTHON_BIN)/django-admin.py runserver $(DJANGO_POSTFIX)
 
+# Run a staging server with foreman
+serve:
+	foreman start
+
 # Clean build files
 clean:
 	find . -name "*.pyc" -print0 | xargs -0 rm -rf
@@ -48,5 +51,5 @@ clean:
 
 # Targets for Django testing
 test:
-	$(PYTHON_BIN)/coverage run --source=$(LOCALPATH) $(LOCALPATH)/manage.py test $(LOCALPATH) $(DJANGO_POSTFIX)
-	- $(PYTHON_BIN)/coverage report
+	$(PYTHON_BIN)/coverage run --source=$(CURDIR) $(CURDIR)/manage.py test $(CURDIR) $(DJANGO_POSTFIX)
+	- $(PYTHON_BIN)/coverage report --omit="venv/*"
