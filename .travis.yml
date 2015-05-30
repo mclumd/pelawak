@@ -1,0 +1,29 @@
+language: python
+python:
+  - '2.7'
+
+install: pip install -r requirements.txt
+
+before_script:
+  - psql -c 'create database pelawak;' -U postgres
+
+script: make test
+
+after_success: coveralls
+
+env:
+  global:
+    - DJANGO_SETTINGS_MODULE=pelawak.settings
+    - SECRET_KEY=supersecretkey
+    - DATABASE_URL=postgresql+psycopg2://localhost/pelawak
+    - EMAIL_HOST_PASSWORD=''
+    - GOOGLE_OAUTH2_CLIENT_ID=''
+    - GOOGLE_OAUTH2_CLIENT_SECRET=''
+
+notifications:
+  email:
+    recipients:
+      - benjamin@bengfort.com
+      - dustin.td@gmail.com
+    on_success: change
+    on_failure: always
