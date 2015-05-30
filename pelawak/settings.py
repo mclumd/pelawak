@@ -14,6 +14,27 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import dj_database_url
 
+##########################################################################
+## Helper function for environmental settings
+##########################################################################
+
+def environ_setting(name, default=None):
+    """
+    Fetch setting from the environment- if not found, then this setting is
+    ImproperlyConfigured.
+    """
+    if name not in os.environ and default is None:
+        from django.core.exceptions import ImproperlyConfigured
+        raise ImproperlyConfigured(
+            "The {0} ENVVAR is not set.".format(name)
+        )
+
+    return os.environ.get(name, default)
+
+##########################################################################
+## Build Paths inside of project with os.path.join
+##########################################################################
+
 PROJECT  = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(PROJECT)
 
@@ -22,7 +43,7 @@ BASE_DIR = os.path.dirname(PROJECT)
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@^*_8(zdgmtvix=j6v=hv22m)+ly+r6gsvjt(=kw=meg6#pp!a'
+SECRET_KEY = environ_setting("SECRET_KEY", "supersecretkey")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,7 +52,7 @@ DEBUG = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pelawak.herokuapp.com']
 
 # Application definition
 
@@ -42,6 +63,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third party apps
+    'social.apps.django_app.default',
+
+    # Pelawak apps
 )
 
 MIDDLEWARE_CLASSES = (
@@ -70,6 +96,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -114,3 +141,23 @@ STATICFILES_DIRS = (
 # https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+##########################################################################
+## Social Authentication
+##########################################################################
+
+## Support for Social Auth authentication backends
+AUTHENTICATION_BACKENDS = (
+    'social.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+## Social authentication strategy
+SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
+SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
+
+## Google-specific authentication keys
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = environ_setting("GOOGLE_OAUTH2_CLIENT_ID", "")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = environ_setting("GOOGLE_OAUTH2_CLIENT_SECRET", "")
+
+LOGIN_REDIRECT_URL = "home"
