@@ -67,8 +67,10 @@ INSTALLED_APPS = (
 
     # Third party apps
     'social.apps.django_app.default',
+    'swampdragon',
 
     # Pelawak apps
+    'chat',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -165,3 +167,6 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = environ_setting("GOOGLE_OAUTH2_CLIENT_ID", "")
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = environ_setting("GOOGLE_OAUTH2_CLIENT_SECRET", "")
 
 LOGIN_REDIRECT_URL = "home"
+
+## Swamp Dragon (for Sockets)
+SWAMP_DRAGON_CONNECTION = ('swampdragon.connections.sockjs_connection.DjangoSubscriberConnection', '/data')
