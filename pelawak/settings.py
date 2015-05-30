@@ -57,6 +57,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pelawak.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = (
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

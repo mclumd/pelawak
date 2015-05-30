@@ -5,6 +5,7 @@ SQLAlchemy==1.0.4
 coverage==3.7.1
 coveralls==0.5
 dj-database-url==0.3.0
+django-grappelli==2.6.5
 django-postgrespool==0.3.0
 docopt==0.6.2
 gunicorn==19.3.0

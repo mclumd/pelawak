@@ -19,8 +19,13 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+
+    # App pages
     url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+
+    # Admin pages
+    url(r'^grappelli/', include('grappelli.urls')),
+    url(r'^admin/',  include(admin.site.urls)),
 
     # Social Authentication URLs
     url('', include('social.apps.django_app.urls', namespace='social')),
