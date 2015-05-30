@@ -6,6 +6,19 @@
     <div class="col-md-12">
       <h1>Pelawak</h1>
       <p>The goal reasoning chat bot!</p>
+
+      {% if user.is_authenticated %}
+      <a href="{% url 'auth:logout' %}?next=/" class="btn btn-default">
+        <i class="fa fa-exit"></i>
+        Logout {{ user.username }}
+      </a>
+      {% else %}
+      <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-default">
+        <i class="fa fa-google"></i>
+        Login with Google
+      </a>
+      {% endif %}
+
     </div>
   </div>
 </div>
