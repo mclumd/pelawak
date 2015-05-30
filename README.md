@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/mclumd/pelawak.png?label=ready&title=Ready)](https://waffle.io/mclumd/pelawak)
 # Pelawak
 **Metacognitive Chat Bot**
 
