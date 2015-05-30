@@ -143,6 +143,9 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+# Grappelli Admin Configuration
+GRAPPELLI_ADMIN_TITLE = "Pelawak Administration"
+
 ##########################################################################
 ## Social Authentication
 ##########################################################################

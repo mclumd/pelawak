@@ -1,1 +1,73 @@
 /* Global Styles for Pelawak */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  padding-top: 70px;
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -76px;
+  /* Pad bottom by footer height */
+  padding: 0 0 106px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    height: 76px;
+    padding: 30px 15px;
+    font-size: 16px;
+}
+
+#footer p {
+    margin: 0;
+}
+
+
+/* Login Panel */
+
+.mainbox {
+    margin-top: 55px;
+}
+
+.mainbox .panel-body {
+    padding: 30px;
+}
+
+.mainbox h1 {
+    margin-top: 5px;
+}
+
+.mainbox a.btn {
+    margin: 12px 0 0 0;
+}
+
+/* Chat Window */
+
+.chat-messages {
+    width: 100%;
+    height: 400px;
+    overflow-y: scroll; 
+}
+
+.chat-message {
+    margin: 2px;
+}
+
+.chat-user {
+    font-weight: bold;
+}
+
+.chat-user:after {
+    content: ":  ";
+    margin-right: 6px;
+}

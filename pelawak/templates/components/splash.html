@@ -1,0 +1,17 @@
+{# Serves as a basic splash page for instructing user to login #}
+
+<div class="container">
+  <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div class="panel panel-info">
+      <div class="panel-body text-center">
+        <h1>Pelawak</h1>
+        <p class="lead">The goal reasoning chat bot!</p>
+        <p class="text-info">To get started using Pelawak, please sign in with Google.</p>
+        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-info">
+          <i class="fa fa-google-plus-square"></i>
+          Login with Google
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
