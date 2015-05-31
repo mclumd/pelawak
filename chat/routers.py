@@ -25,13 +25,17 @@ class MessageRouter(ModelRouter):
         """
         errors = {}
 
-        if 'username' not in kwargs or not kwargs['username']:
-            errors['username'] = 'must supply a username'
+        if 'user' not in kwargs or not kwargs['user']:
+            errors['user'] = 'must supply a username'
 
         if 'message' not in kwargs or not kwargs['message']:
             errors['message'] =  'must supply a chat message!'
 
-        kwargs['user'] = User.objects.filter(username=kwargs.pop('username')).first()
+        if errors:
+            self.on_error(errors)
+            return
+
+        kwargs['user'] = User.objects.filter(username=kwargs.pop('user')).first()
         if not kwargs['user']:
             errors['user'] = 'could not find a user with the supplied username'
 

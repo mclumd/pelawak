@@ -37,7 +37,7 @@ if __name__ == '__main__':
         message = raw_input()
         while message != 'q!':
             # Send message
-            client.call_router('create', 'chat-route', username=name, message=message)
+            client.call_router('create', 'chat-route', user=name, message=message)
             message = raw_input()
     except KeyboardInterrupt:
         client.disconnect()

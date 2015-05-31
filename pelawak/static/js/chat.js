@@ -26,16 +26,43 @@
       // Resolve "this" ambiguity
       var self = this;
 
-      // Bind messages on enter to submit form
-      this.chatInput.keydown(function(e) {
-        if (e.keyCode == 13 && !e.shiftKey) {
-          e.preventDefault();
-          self.chatForm.submit();
-        }
+      swampdragon.open(function() {
+        swampdragon.subscribe('chat-route', 'messages', null, function(context, data) {
+          // successfully subscribed
+          console.log(context, data);
+          self.addMessage({
+            user: 'system',
+            message:'Subscribed to Pelawak chat!'
+          });
+
+          // Bind messages on enter to submit form
+          self.chatInput.keydown(function(e) {
+            if (e.keyCode == 13 && !e.shiftKey) {
+              e.preventDefault();
+              self.chatForm.submit();
+            }
+          });
+
+          // Bind the submit form
+          self.chatForm.submit(self.onChatInput(self));
+
+          // Listen for channel messages
+          swampdragon.onChannelMessage(function (channels, message) {
+            console.log(message);
+            self.addMessage(message.data);
+          });
+
+        }, function(context, data) {
+          // failed to subscribe
+          console.log(context, data);
+          self.addMessage({
+            user: 'system',
+            message: 'Was unable to subscribe to Pelawak!'
+          });
+        });
       });
 
-      // Bind the submit form
-      this.chatForm.submit(this.onChatInput(self));
+
 
     }
 
@@ -47,8 +74,13 @@
         // Get and send data to the server
         data = self.getChatData();
 
-        // Temporarily just add data directly to the message window
-        self.messages.append(self.template(data));
+        swampdragon.create('chat-route', data, function (context, data) {
+          // successful creation
+          console.log(context, data);
+        }, function (context, data) {
+          // failed creation
+          console.log(context, data);
+        });
 
         // Empty the chat input to get ready to type again
         self.chatInput.val('');
@@ -58,11 +90,16 @@
       }
     }
 
+    // Helper function to add messages
+    this.addMessage = function(data) {
+      this.messages.append(this.template(data));
+    }
+
     // Used to extract chat data from the chat form
     this.getChatData = function() {
       return {
         message: this.chatInput.val(),
-        username: this.chatUser.val()
+        user: this.chatUser.val()
       }
     }
 
