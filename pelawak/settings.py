@@ -170,3 +170,4 @@ LOGIN_REDIRECT_URL = "home"
 
 ## Swamp Dragon (for Sockets)
 SWAMP_DRAGON_CONNECTION = ('swampdragon.connections.sockjs_connection.DjangoSubscriberConnection', '/data')
+DRAGON_URL = environ_setting("DRAGON_URL", "http://localhost:9999/")
